@@ -1,3 +1,6 @@
+const propertyType = ["House", "Apartment", "Penthouse"];
+const propertyLocations = ["Johannesburg", "Cape Town", "Durban"];
+
 export async function fetchProperties() {
   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
 
@@ -12,10 +15,11 @@ export async function fetchProperties() {
     id: post.id,
     title: post.title,
     price: Math.floor(Math.random() * 4000000) + 800000,
-    location: "Johannesburg",
+    location:
+      propertyLocations[Math.floor(Math.random() * propertyLocations.length)],
     bedrooms: Math.floor(Math.random() * 4) + 1,
     bathrooms: Math.floor(Math.random() * 3) + 1,
-    type: "House",
+    type: propertyType[Math.floor(Math.random() * propertyType.length)],
     image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
   }));
 }
