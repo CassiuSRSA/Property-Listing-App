@@ -1,5 +1,7 @@
+import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import ListingsPage from "./pages/ListingsPage";
+import PropertyDetailPage from "./pages/PropertyDetailPage";
 
 function App() {
   return (
@@ -9,7 +11,10 @@ function App() {
       </header>
 
       <main>
-        <ListingsPage />
+        <Routes>
+          <Route path="/" element={<ListingsPage />} />
+          <Route path="/properties/:id" element={<PropertyDetailPage />} />
+        </Routes>
       </main>
     </Layout>
   );
