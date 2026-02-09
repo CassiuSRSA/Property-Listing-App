@@ -32,7 +32,7 @@ function ListingsPage() {
       }
 
       if (type) query = query.eq("type", type);
-      if (bedrooms) query = query.eq("bedrooms", Number(bedrooms));
+      if (bedrooms) query = query.gte("bedrooms", Number(bedrooms));
 
       const { data, error } = await query;
 
@@ -73,10 +73,10 @@ function ListingsPage() {
 
         <select value={bedrooms} onChange={(e) => setBedrooms(e.target.value)}>
           <option value="">Any Bedrooms</option>
-          <option value="1">1 Bedroom</option>
-          <option value="2">2 Bedrooms</option>
-          <option value="3">3 Bedrooms</option>
-          <option value="4">4 Bedrooms</option>
+          <option value="1">1 Bedroom+</option>
+          <option value="2">2 Bedrooms+</option>
+          <option value="3">3 Bedrooms+</option>
+          <option value="4">4 Bedrooms+</option>
         </select>
       </div>
       {!loading && properties.length === 0 && (
