@@ -1,53 +1,70 @@
-import { useParams, Link } from "react-router-dom";
-import { useProperties } from "../hooks/useProperties";
+import { useParams, useLocation, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+import "./PropertyDetailPage.css";
 
-function PropertyDetailPage() {
+function PropertyDetailsPage() {
   const { id } = useParams();
-  const { properties, loading, error } = useProperties();
+  const location = useLocation();
+
+  const backLink = location.state?.from || "/";
+
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchProperty() {
+      const { data, error } = await supabase
+        .from("properties")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        setError("Property not found");
+      } else {
+        setProperty(data);
+      }
+
+      setLoading(false);
+    }
+
+    fetchProperty();
+  }, [id]);
 
   if (loading) return <p>Loading property…</p>;
-  if (error) return <p>Error: {error}</p>;
-
-  const property = properties.find((p) => p.id === Number(id));
-
-  if (!property) {
-    return (
-      <div>
-        <p>Property not found.</p>
-        <Link to="/">← Back to listings</Link>
-      </div>
-    );
-  }
+  if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Link to="/">← Back to listings</Link>
+    <div className="property-details">
+      <Link to={backLink} className="back-link">
+        ← Back to listings
+      </Link>
 
-      <h2>{property.title}</h2>
+      <div className="details-grid">
+        <img
+          src={property.image_url || "/placeholder.jpg"}
+          alt={property.title}
+          className="main-image"
+        />
 
-      <img
-        src={property.image}
-        alt={property.title}
-        style={{ width: "100%", maxWidth: "600px", marginBottom: "20px" }}
-      />
+        <div className="details-info">
+          <h1>{property.title}</h1>
+          <p className="location">{property.location}</p>
 
-      <p>
-        <strong>Location:</strong> {property.location}
-      </p>
-      <p>
-        <strong>Type:</strong> {property.type}
-      </p>
-      <p>
-        <strong>Bedrooms:</strong> {property.bedrooms}
-      </p>
-      <p>
-        <strong>Bathrooms:</strong> {property.bathrooms}
-      </p>
-      <p>
-        <strong>Price:</strong> R {property.price.toLocaleString()}
-      </p>
+          <p className="price">R {property.price.toLocaleString()}</p>
+
+          <div className="details-meta">
+            <span>{property.bedrooms} bedrooms</span>
+            <span>{property.type}</span>
+          </div>
+
+          <p className="description">{property.description}</p>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default PropertyDetailPage;
+export default PropertyDetailsPage;
