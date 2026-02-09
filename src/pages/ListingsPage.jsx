@@ -85,7 +85,7 @@ function ListingsPage() {
       {!loading && properties.length === 0 && (
         <p>No properties match your search.</p>
       )}
-      {searchInput !== search && <small>Searching…</small>}
+      {searchInput !== search && <p>Searching…</p>}
       <PropertyList properties={properties} />
     </div>
   );

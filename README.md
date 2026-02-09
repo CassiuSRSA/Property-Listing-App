@@ -1,34 +1,96 @@
 # 🏠 Property Listings Dashboard
 
-A modern React property listings application showcasing real-world front-end patterns such as data fetching, search, filtering, sorting, pagination, and client-side routing.
+A modern **React property listings application** built with a real backend powered by **Supabase**.  
+This project demonstrates production-ready front-end patterns including server-side data fetching, debounced search, filtering, sorting, pagination, and dynamic routing.
 
-Built to demonstrate clean React architecture, reusable components, and production-ready UX patterns.
+Built to showcase clean React architecture, thoughtful UX, and real-world API integration.
 
-🔗 **Live Demo:** https://property-listing-app-theta.vercel.app/
+🔗 **Live Demo:** https://property-listing-app-theta.vercel.app/  
 📦 **GitHub Repo:** https://github.com/CassiuSRSA/Property-Listing-App
 
 ---
 
 ## ✨ Features
 
-- 📋 Property listings with reusable card components
-- 🔍 Search by title and location
-- 🏷️ Filter by property type and bedrooms
-- ↕️ Sort by price (ascending / descending)
-- 📄 Pagination for large datasets
-- 🧭 Client-side routing with property detail pages
-- ⏳ Loading and error states for async data
-- 🧼 Clean, readable, and scalable component structure
+### 📋 Property Listings
+
+- Reusable, styled property card components
+- Responsive grid layout
+- Image support with graceful fallbacks
+- Realistic, production-style data
+
+### 🔍 Search & Filters (Server-Side)
+
+- Debounced text search (title & location)
+- Filter by:
+  - Property type (Apartment, House, Penthouse)
+  - Bedrooms
+- All filtering handled **server-side via Supabase**, not mocked data
+
+### ↕️ Sorting & Pagination
+
+- Server-side sorting by price
+- Pagination-ready architecture for large datasets
+- Preserves filters and search state across navigation
+
+### 📄 Property Details Page
+
+- Dynamic routing (`/properties/:id`)
+- Fetches individual property records from the API
+- Polished, responsive layout
+- Rich property information display
+
+### 🔙 Smart Back Navigation
+
+- Returns users to the **exact page, filters, and pagination state**
+- Implemented using React Router location state
+- No unnecessary state resets or refetching
+
+### ⚡ Performance & UX
+
+- Debounced API requests to reduce network load
+- Loading and error states for async operations
+- Defensive UI patterns (fallback images, empty states)
 
 ---
+
+## 🗄️ Backend & API (Supabase)
+
+This project is backed by a **Supabase-hosted PostgreSQL database**, accessed via Supabase’s REST API.
+
+### Backend Highlights
+
+- Custom database schema for properties
+- Secure API access using environment variables
+- Server-side querying for:
+- Search
+- Filtering
+- Sorting
+- Pagination
+- Seeded with realistic South African property data
+
+### Properties Table Structure
+
+```
+title
+price
+location (Suburb - City)
+bedrooms
+bathrooms
+type
+image
+description
+created_at
+```
 
 ## 🛠️ Tech Stack
 
 - **React** (Hooks-based architecture)
 - **Vite** (Fast development and builds)
 - **React Router** (Client-side routing)
+- **Supabase** (PostgreSQL + REST API)
 - **JavaScript (ES6+)**
-- **CSS / Inline Styles**
+- **CSS (Grid & Flexbox)**
 - **Vercel** (Hosting & CI)
 
 ---
@@ -48,13 +110,15 @@ This project was intentionally structured to reflect real-world React applicatio
 ## 📂 Project Structure
 
 ```
+
 src/
-├── api/
 ├── components/
 ├── pages/
 ├── hooks/
+├── api/
 ├── App.jsx
 └── main.jsx
+
 ```
 
 ---
@@ -66,6 +130,13 @@ git clone https://github.com/CassiuSRSA/Property-Listing-App
 cd YOUR-REPO
 npm install
 npm run dev
+```
+
+Create a .env file:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 Open your browser at:
@@ -90,7 +161,6 @@ This project was built to demonstrate professional React patterns, clean archite
 
 ## 🔮 Possible Improvements
 
-- Backend integration (Supabase / Firebase)
 - Authentication and saved listings
 - Advanced filtering
 - Map-based views
