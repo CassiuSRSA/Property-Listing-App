@@ -25,7 +25,10 @@ function ListingsPage() {
       setLoading(true);
       setError(null);
 
-      let query = supabase.from("properties").select("*");
+      let query = supabase
+        .from("properties")
+        .select("*")
+        .order("price", { ascending: true });
 
       if (search) {
         query = query.or(`title.ilike.%${search}%,location.ilike.%${search}%`);
